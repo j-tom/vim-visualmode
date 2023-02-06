@@ -1,15 +1,15 @@
+let s:sequence = {
+\ 'n'  : "\<C-V>",
+\ '' : "v",
+\ 'v'  : "V",
+\ 'V'  : "\<Esc>",
+\ }
+
+if exists('g:visualmode_sequence')
+  let s:sequence = g:visualmode_sequence
+endif
+
 function! visualmode#toggle() abort
-  let m = mode()
-  if m =~? '^n$'
-    call feedkeys("\<C-V>", 'n')
-  elseif m =~? '^$'
-    call feedkeys("v", 'n')
-  elseif m =~? '^v$'
-    call feedkeys("V", 'n')
-  elseif m =~? '^V$'
-    call feedkeys("\<Esc>", 'n')
-  else
-    call feedkeys("v", 'n')
-  endif
+  call feedkeys(get(s:sequence, mode(), "v"), 'n')
   return ''
 endfunction
